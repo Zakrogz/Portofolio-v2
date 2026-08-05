@@ -2,6 +2,7 @@ import { useRef } from "react";
 import { useGSAP } from "@gsap/react";
 import { gsap, EASE } from "../lib/gsap";
 import { hero } from "../data/content.js";
+import { publicUrl } from "../lib/publicUrl.js";
 import styles from "./Hero.module.css";
 
 export default function Hero() {
@@ -135,7 +136,7 @@ export default function Hero() {
         preload="auto"
         aria-hidden="true"
       >
-        <source src="/hero-loop.mp4" type="video/mp4" />
+        <source src={publicUrl("/hero-loop.mp4")} type="video/mp4" />
       </video>
       <div className={styles.bgDuotone} aria-hidden="true" />
       <div className={styles.bgOverlay} aria-hidden="true" />

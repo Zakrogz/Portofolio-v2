@@ -1,4 +1,5 @@
 import { contact } from "../data/content.js";
+import { publicUrl } from "../lib/publicUrl.js";
 import styles from "./Footer.module.css";
 
 // Solo decorativas, a propósito sin enlazar a ningún sitio: Diego Soler es
@@ -17,7 +18,13 @@ export default function Footer() {
 
         <span className={styles.socials} aria-hidden="true">
           {SOCIALS.map((s) => (
-            <img key={s.icon} src={s.icon} alt="" title={s.label} className={styles.socialIcon} />
+            <img
+              key={s.icon}
+              src={publicUrl(s.icon)}
+              alt=""
+              title={s.label}
+              className={styles.socialIcon}
+            />
           ))}
         </span>
 

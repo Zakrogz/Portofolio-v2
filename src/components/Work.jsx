@@ -2,6 +2,7 @@ import { useRef } from "react";
 import { useGSAP } from "@gsap/react";
 import { gsap, EASE } from "../lib/gsap";
 import { work } from "../data/content.js";
+import { publicUrl } from "../lib/publicUrl.js";
 import styles from "./Work.module.css";
 
 const SPACING = 230; // separación horizontal entre el centro y cada lateral (px)
@@ -141,9 +142,9 @@ export default function Work() {
               loop
               playsInline
               preload="none"
-              poster={project.poster}
+              poster={publicUrl(project.poster)}
             >
-              <source src={project.video} type="video/mp4" />
+              <source src={publicUrl(project.video)} type="video/mp4" />
             </video>
             {/* Mockup de marcador mientras no hay vídeo/captura real: textura +
                 timecode + botón de play, en el mismo lenguaje visual que el
