@@ -14,11 +14,32 @@ const SECTIONS = [
 
 // Reparto inicial a partes iguales, solo como primer pintado antes de que
 // ScrollTrigger haya medido nada. Se recalcula en cuanto se puede (ver abajo).
+const WAYPOINT_X = (i) => (i % 2 === 0 ? 58 : 42);
+
 const fallbackWaypoints = () =>
   SECTIONS.map((_, i) => ({
-    x: i % 2 === 0 ? 68 : 32,
+    x: WAYPOINT_X(i),
     y: (i / (SECTIONS.length - 1)) * 100,
   }));
+
+// Si dos marcas caen muy cerca en la proporción real de scroll (p. ej. una
+// sección corta y sin pin justo después de una fijada), la curva tiene que
+// girar en muy poco espacio vertical y sale en pico en vez de suave. Aquí
+// forzamos una separación mínima entre marcas consecutivas, empujando hacia
+// abajo las que queden demasiado juntas.
+function enforceMinSpacing(points, minGap) {
+  for (let i = 1; i < points.length; i++) {
+    if (points[i].y < points[i - 1].y + minGap) {
+      points[i].y = points[i - 1].y + minGap;
+    }
+  }
+  const last = points[points.length - 1].y;
+  if (last > 100) {
+    const scale = 100 / last;
+    points.forEach((p) => (p.y *= scale));
+  }
+  return points;
+}
 
 // Curva suave entre puntos (beziers cúbicas con el punto de control a mitad
 // de camino en Y, para que el giro no sea en ángulo recto).
@@ -80,10 +101,14 @@ export default function Timeline() {
         const max = ScrollTrigger.maxScroll(window);
         if (!max) return;
 
-        const points = sectionTriggers.map((t, i) => ({
-          x: i % 2 === 0 ? 68 : 32,
+        const rawPoints = sectionTriggers.map((t, i) => ({
+          x: WAYPOINT_X(i),
           y: t ? (t.start / max) * 100 : (i / (SECTIONS.length - 1)) * 100,
         }));
+        // Separación mínima: al menos la mitad de lo que tocaría con reparto
+        // uniforme, para que ninguna curva quede demasiado apretada.
+        const minGap = (100 / (SECTIONS.length - 1)) * 0.5;
+        const points = enforceMinSpacing(rawPoints, minGap);
 
         pathRef.current?.setAttribute("d", buildPath(points));
         tickRefs.current.forEach((circle, i) => {
