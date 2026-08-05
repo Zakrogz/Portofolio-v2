@@ -46,6 +46,8 @@ export const services = [
     title: "Edición long-form",
     description:
       "Montaje narrativo para vídeos de YouTube de formato largo: estructura, ritmo y cortes que sostienen la retención sin perder el mensaje.",
+    video: "/timeline.mp4",
+    mediaLabel: "Premiere Pro — Timeline",
   },
   {
     title: "Shorts y reels",
@@ -56,6 +58,8 @@ export const services = [
     title: "Color grading",
     description:
       "Corrección y etalonaje para que el vídeo tenga una imagen consistente entre tomas y coherente con la identidad del canal.",
+    video: "/color-grade.mp4",
+    mediaLabel: "DaVinci Resolve — Color",
   },
   {
     title: "Motion graphics",

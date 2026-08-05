@@ -46,9 +46,6 @@ export default function Contact() {
     <section id="contacto" ref={scope} className="section">
       <div className={`container ${styles.layout}`}>
         <div className={styles.info}>
-          <p className="eyebrow" data-reveal>
-            Contacto
-          </p>
           <h2 className={styles.heading} data-reveal>
             Cuéntame de tu proyecto
           </h2>

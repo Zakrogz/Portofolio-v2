@@ -18,7 +18,7 @@
 }
 
 .inner a:hover {
-  color: var(--teal);
+  color: var(--red);
 }
 
 /* Puramente decorativos (ver comentario en Footer.jsx): opacidad reducida y

@@ -48,7 +48,6 @@ function PlayIcon(props) {
 
 export default function Work() {
   const scope = useRef(null);
-  const eyebrowRef = useRef(null);
   const titleRef = useRef(null);
   const stageRef = useRef(null);
   const cardRefs = useRef([]);
@@ -90,16 +89,11 @@ export default function Work() {
       });
 
       tl.fromTo(
-        eyebrowRef.current,
-        { autoAlpha: 0, y: 12 },
-        { autoAlpha: 1, y: 0, duration: 0.25, ease: EASE }
-      ).fromTo(
         titleRef.current,
         { autoAlpha: 0, y: 24 },
         // Ease pedido explícitamente para este titular, distinto del ease
         // de marca que usa el resto del sitio.
-        { autoAlpha: 1, y: 0, duration: 0.45, ease: "power1.inOut" },
-        "-=0.1"
+        { autoAlpha: 1, y: 0, duration: 0.45, ease: "power1.inOut" }
       );
 
       // Solapado con el título ("-=0.2"): antes esperaba a que el título
@@ -127,15 +121,6 @@ export default function Work() {
         });
       }
 
-      // "Outro": tras ver la última tarjeta, la sección entera se retira un
-      // poco antes de soltar el pin — evita el corte seco al pasar a Proceso.
-      tl.addLabel("outro", "+=0.15")
-        .to(
-          [eyebrowRef.current, titleRef.current],
-          { autoAlpha: 0.15, y: -16, duration: 0.4, ease: EASE },
-          "outro"
-        )
-        .to(stageRef.current, { autoAlpha: 0.2, duration: 0.4, ease: EASE }, "outro");
     },
     { scope }
   );
@@ -143,9 +128,6 @@ export default function Work() {
   return (
     <section id="trabajo" ref={scope} className={styles.section}>
       <div className={`container ${styles.header}`}>
-        <p className="eyebrow" ref={eyebrowRef}>
-          Trabajo reciente
-        </p>
         <h2 ref={titleRef} className={styles.heading}>
           Una muestra de proyectos recientes
         </h2>

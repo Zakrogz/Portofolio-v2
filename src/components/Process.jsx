@@ -18,7 +18,13 @@ export default function Process() {
   const scope = useScrollReveal({ stagger: 0.15 });
 
   return (
-    <section id="proceso" ref={scope} className="section">
+    <section id="proceso" ref={scope} className={`section ${styles.section}`}>
+      {/* Recurso gráfico, no contenido: la sección más "vacía" del sitio (solo
+          una etiqueta + 4 iconos) gana presencia con un numeral gigante de
+          fondo en vez de más imágenes. */}
+      <span className={styles.bgNumeral} aria-hidden="true">
+        02
+      </span>
       <div className="container">
         <p className={styles.toolsLabel} data-reveal>
           Con qué edito

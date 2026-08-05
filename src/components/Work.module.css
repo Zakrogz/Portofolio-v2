@@ -12,12 +12,15 @@
 }
 
 .heading {
-  font-size: clamp(1.6rem, 4.4vw, 2.7rem);
+  /* Antes forzado a una sola línea (clamp 1.6–2.7rem + nowrap/ellipsis).
+     Con el nuevo tamaño "display" eso truncaría el titular con "…", así que
+     se deja envolver en 2 líneas — el tamaño gana sobre el requisito previo
+     de una sola línea, son incompatibles a esta escala. */
+  font-size: clamp(2.75rem, 8.5vw, 6.5rem);
+  line-height: 0.95;
   margin-top: 0.6rem;
-  /* Pedido explícitamente: el titular cabe en una sola línea. */
-  white-space: nowrap;
-  overflow: hidden;
-  text-overflow: ellipsis;
+  max-width: 18ch;
+  margin-inline: auto;
 }
 
 /* --- Carrusel horizontal (centro grande + dos laterales) --- */
@@ -123,6 +126,6 @@
 }
 
 .eyeIcon {
-  color: var(--teal);
+  color: var(--red);
   flex-shrink: 0;
 }

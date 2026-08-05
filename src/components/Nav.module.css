@@ -40,7 +40,7 @@
 }
 
 .links a.active {
-  color: var(--teal);
+  color: var(--red);
 }
 
 .cta {

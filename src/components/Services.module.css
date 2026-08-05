@@ -11,8 +11,10 @@
 }
 
 .heading {
-  font-size: clamp(1.9rem, 4vw, 2.6rem);
+  font-size: clamp(2.75rem, 8.5vw, 6.5rem);
+  line-height: 0.95;
   margin-top: 0.75rem;
+  max-width: 16ch;
 }
 
 /* --- Caja grande: títulos a la izquierda, descripción a la derecha --- */
@@ -47,7 +49,124 @@
 }
 
 .titleActive {
-  border-left-color: var(--teal);
+  border-left-color: var(--red);
+}
+
+.mediaCol {
+  display: flex;
+  flex-direction: column;
+}
+
+/* --- "Monitor" del servicio activo: vídeo real (timeline/color grade) con
+   un barrido de escaneo al cambiar de servicio, o un estado idle con
+   escaneo ambiental cuando el servicio no tiene grabación propia. --- */
+.mediaFrame {
+  position: relative;
+  aspect-ratio: 16 / 9;
+  background: var(--navy-950);
+  overflow: hidden;
+}
+
+.mediaLayer {
+  position: absolute;
+  inset: 0;
+  will-change: clip-path;
+}
+
+.mediaVideo {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+
+.idle {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.idleText {
+  font-family: var(--font-mono);
+  text-transform: uppercase;
+  letter-spacing: 0.14em;
+  font-size: 0.75rem;
+  color: var(--navy-700);
+}
+
+/* Escaneo ambiental en reposo: una banda tenue que sube y baja muy despacio,
+   solo en las capas sin vídeo propio — mantiene el panel "vivo" en vez de
+   dejarlo plano mientras el servicio activo no tiene grabación que mostrar. */
+.idle::after {
+  content: "";
+  position: absolute;
+  inset: 0;
+  background: linear-gradient(
+    to bottom,
+    transparent 0%,
+    rgba(232, 67, 46, 0.12) 48%,
+    rgba(232, 67, 46, 0.12) 52%,
+    transparent 100%
+  );
+  background-size: 100% 260%;
+  animation: idleScan 6s ease-in-out infinite;
+  pointer-events: none;
+}
+
+@keyframes idleScan {
+  0%,
+  100% {
+    background-position: 0 -160%;
+  }
+  50% {
+    background-position: 0 160%;
+  }
+}
+
+/* Línea de barrido del wipe: su posición ("left") la conduce GSAP durante
+   la transición entre servicios; en reposo queda oculta (autoAlpha 0). */
+.sweepBar {
+  position: absolute;
+  top: 0;
+  bottom: 0;
+  width: 3px;
+  background: var(--red);
+  box-shadow: 0 0 16px 2px rgba(232, 67, 46, 0.65);
+  transform: translateX(-50%);
+  pointer-events: none;
+  z-index: 3;
+}
+
+.frameChrome {
+  position: absolute;
+  top: 0.85rem;
+  left: 1rem;
+  display: flex;
+  align-items: center;
+  gap: 0.55rem;
+  padding: 0.35rem 0.7rem;
+  border-radius: 999px;
+  background: rgba(19, 19, 19, 0.55);
+  backdrop-filter: blur(2px);
+  z-index: 2;
+  pointer-events: none;
+}
+
+.recDot {
+  width: 6px;
+  height: 6px;
+  flex-shrink: 0;
+  border-radius: 50%;
+  background: var(--red);
+  box-shadow: 0 0 6px 1px rgba(232, 67, 46, 0.7);
+}
+
+.frameLabel {
+  font-family: var(--font-mono);
+  text-transform: uppercase;
+  letter-spacing: 0.1em;
+  font-size: 0.7rem;
+  color: var(--text-muted);
+  white-space: nowrap;
 }
 
 .descStage {
@@ -71,12 +190,10 @@
   .panel {
     grid-template-columns: 0.85fr 1.15fr;
   }
+}
 
-  .descStage {
-    border-top: none;
-    border-left: 1px solid var(--navy-700);
-    min-height: 0;
-    display: flex;
-    align-items: center;
+@media (prefers-reduced-motion: reduce) {
+  .idle::after {
+    animation: none;
   }
 }

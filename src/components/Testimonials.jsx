@@ -73,7 +73,6 @@ export default function Testimonials() {
   return (
     <section id="testimonios" ref={scope} className="section">
       <div className={`container ${styles.header}`}>
-        <p className="eyebrow">Testimonios</p>
         <h2 className={styles.heading}>Lo que dicen mis clientes</h2>
         <p className={styles.disclaimer}>
           Los testimonios de abajo son marcadores de ejemplo, no citas reales de

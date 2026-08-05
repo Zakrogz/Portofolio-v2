@@ -28,7 +28,7 @@
 }
 
 .tickActive {
-  fill: var(--teal);
+  fill: var(--red);
   transition: fill 0.3s ease;
 }
 
@@ -40,8 +40,8 @@
   width: 8px;
   height: 8px;
   border-radius: 50%;
-  background: var(--teal);
-  box-shadow: 0 0 10px 1px rgba(45, 212, 191, 0.55);
+  background: var(--red);
+  box-shadow: 0 0 10px 1px rgba(232, 67, 46, 0.55);
 }
 
 /* Solo en pantallas amplias: en móvil/tablet ocuparía espacio del contenido

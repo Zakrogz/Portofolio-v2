@@ -1,13 +1,18 @@
 :root {
   /* Gris carbón neutro (sin tinte azulado) en vez de navy: más profesional,
-     y deja que el teal/rojo de acento destaquen sin competir con otro color. */
+     y deja que el rojo de acento destaque sin competir con otro color. */
   --navy-950: #131313;
   --navy-900: #1d1d1d;
   --navy-800: #272727;
   --navy-700: #3d3d3d;
+  /* Único acento del sitio: todo elemento interactivo o destacado (estados
+     activos, enlaces, indicadores) usa este rojo, nunca otro color. --teal
+     queda reservado exclusivamente al degradado atmosférico de fondo del
+     Hero (grading del vídeo, no es un color de interfaz). */
+  --red: #e8432e;
+  --red-dim: #b3311f;
   --teal: #2dd4bf;
   --teal-dim: #1f8f82;
-  --red: #e8432e;
   --text: #f4f5f3;
   --text-muted: #9aa3af;
 
@@ -93,14 +98,6 @@ button {
   padding-block: clamp(4rem, 8vw, 7rem);
 }
 
-.eyebrow {
-  font-family: var(--font-mono);
-  text-transform: uppercase;
-  letter-spacing: 0.14em;
-  font-size: 0.8rem;
-  color: var(--teal);
-}
-
 .btn {
   position: relative;
   display: inline-flex;
@@ -138,7 +135,7 @@ button {
 }
 
 .btn-primary::before {
-  background: var(--teal-dim);
+  background: var(--red-dim);
 }
 
 .btn-secondary {
