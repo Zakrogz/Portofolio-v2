@@ -1,6 +1,18 @@
 import { useScrollReveal } from "../hooks/useScrollReveal.js";
-import { process } from "../data/content.js";
+import {
+  AdobePremiereIcon,
+  AdobeAfterEffectsIcon,
+  DaVinciResolveIcon,
+  FilmoraIcon,
+} from "./icons/ToolIcons.jsx";
 import styles from "./Process.module.css";
+
+const TOOLS = [
+  { name: "Premiere Pro", Icon: AdobePremiereIcon, native: true },
+  { name: "After Effects", Icon: AdobeAfterEffectsIcon, native: true },
+  { name: "DaVinci Resolve", Icon: DaVinciResolveIcon, native: false },
+  { name: "Filmora", Icon: FilmoraIcon, native: false },
+];
 
 export default function Process() {
   const scope = useScrollReveal({ stagger: 0.15 });
@@ -8,24 +20,19 @@ export default function Process() {
   return (
     <section id="proceso" ref={scope} className="section">
       <div className="container">
-        <p className="eyebrow" data-reveal>
-          Cómo trabajo
+        <p className={styles.toolsLabel} data-reveal>
+          Con qué edito
         </p>
-        <h2 className={styles.heading} data-reveal>
-          Cuatro pasos, sin sorpresas
-        </h2>
-
-        <ol className={styles.list}>
-          {process.map((item) => (
-            <li className={styles.item} key={item.step} data-reveal>
-              <span className={styles.step}>{item.step}</span>
-              <div>
-                <h3 className={styles.title}>{item.title}</h3>
-                <p className={styles.description}>{item.description}</p>
-              </div>
+        <ul className={styles.toolsGrid}>
+          {TOOLS.map(({ name, Icon, native }) => (
+            <li className={styles.toolCard} key={name} data-reveal>
+              <span className={`${styles.toolIcon} ${native ? styles.toolIconNative : ""}`}>
+                <Icon />
+              </span>
+              <span className={styles.toolName}>{name}</span>
             </li>
           ))}
-        </ol>
+        </ul>
       </div>
     </section>
   );

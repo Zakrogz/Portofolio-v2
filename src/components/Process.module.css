@@ -1,52 +1,61 @@
-.heading {
-  font-size: clamp(1.9rem, 4vw, 2.6rem);
-  max-width: 20ch;
-  margin-top: 0.75rem;
-  margin-bottom: 3rem;
+.toolsLabel {
+  font-family: var(--font-mono);
+  text-transform: uppercase;
+  letter-spacing: 0.14em;
+  font-size: 0.8rem;
+  color: var(--text-muted);
+  margin-bottom: 1.25rem;
 }
 
-.list {
+.toolsGrid {
   list-style: none;
   margin: 0;
   padding: 0;
   display: grid;
-  gap: 0;
+  grid-template-columns: repeat(auto-fit, minmax(120px, 1fr));
+  gap: 1rem;
 }
 
-.item {
-  display: grid;
-  grid-template-columns: auto 1fr;
-  gap: 1.5rem;
-  padding-block: 1.75rem;
-  border-top: 1px solid var(--navy-700);
+.toolCard {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 0.75rem;
+  padding: 1.5rem 1rem;
+  border-radius: 14px;
+  background: var(--navy-900);
+  border: 1px solid var(--navy-700);
 }
 
-.item:last-child {
-  border-bottom: 1px solid var(--navy-700);
-}
-
-.step {
-  font-family: var(--font-mono);
-  font-size: 1.1rem;
-  color: var(--red);
-}
-
-.title {
-  font-family: var(--font-body);
-  font-size: 1.15rem;
-  font-weight: 600;
-  text-transform: none;
-  margin-bottom: 0.4rem;
-}
-
-.description {
+.toolIcon {
+  width: 40px;
+  height: 40px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
   color: var(--text-muted);
-  max-width: 60ch;
 }
 
-@media (min-width: 700px) {
-  .item {
-    grid-template-columns: 100px 1fr;
-    align-items: baseline;
-  }
+.toolIcon svg {
+  width: 100%;
+  height: 100%;
+}
+
+/* Premiere Pro / After Effects traen su propio fondo e iconografía a color;
+   DaVinci Resolve / Filmora son monocromo (currentColor) y necesitan una
+   ficha algo más pequeña para no verse desproporcionadas junto a las otras. */
+.toolIconNative {
+  border-radius: 8px;
+  overflow: hidden;
+}
+
+.toolIcon:not(.toolIconNative) svg {
+  width: 78%;
+  height: 78%;
+}
+
+.toolName {
+  font-size: 0.82rem;
+  color: var(--text-muted);
+  text-align: center;
 }

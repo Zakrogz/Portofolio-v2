@@ -1,3 +1,7 @@
+.header {
+  margin-bottom: 3rem;
+}
+
 .heading {
   font-size: clamp(1.9rem, 4vw, 2.6rem);
   max-width: 24ch;
@@ -6,7 +10,6 @@
 
 .disclaimer {
   margin-top: 0.9rem;
-  margin-bottom: 3rem;
   max-width: 60ch;
   color: var(--text-muted);
   font-size: 0.9rem;
@@ -21,10 +24,21 @@
 .card {
   position: relative;
   margin: 0;
-  padding: 1.75rem;
-  border-radius: 14px;
+  padding: 1.85rem 1.75rem 1.75rem;
+  border-radius: 16px;
   background: var(--navy-900);
-  border: 1px dashed var(--navy-700);
+  border: 1px solid var(--navy-700);
+  overflow: hidden;
+}
+
+.quoteMark {
+  position: absolute;
+  top: 1.5rem;
+  right: 1.5rem;
+  width: 34px;
+  height: auto;
+  color: var(--navy-700);
+  pointer-events: none;
 }
 
 .badge {
@@ -37,29 +51,48 @@
   border: 1px solid var(--red);
   border-radius: 999px;
   padding: 0.2rem 0.6rem;
-  margin-bottom: 1rem;
+  margin-bottom: 1.1rem;
 }
 
 .quote {
+  position: relative;
   margin: 0;
+  padding-right: 2rem;
   font-size: 1rem;
   color: var(--text);
   font-style: italic;
+  line-height: 1.5;
 }
 
 .caption {
   display: flex;
-  flex-direction: column;
-  margin-top: 1.25rem;
+  align-items: center;
+  gap: 0.75rem;
+  margin-top: 1.5rem;
   font-style: normal;
 }
 
+.avatar {
+  width: 40px;
+  height: 40px;
+  flex-shrink: 0;
+  border-radius: 50%;
+  background: var(--navy-800);
+  border: 1px solid var(--navy-700);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  color: var(--text-muted);
+}
+
 .name {
+  display: block;
   font-weight: 600;
   font-size: 0.9rem;
 }
 
 .role {
+  display: block;
   color: var(--text-muted);
-  font-size: 0.82rem;
+  font-size: 0.8rem;
 }

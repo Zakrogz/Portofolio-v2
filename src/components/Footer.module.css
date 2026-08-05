@@ -20,3 +20,18 @@
 .inner a:hover {
   color: var(--teal);
 }
+
+/* Puramente decorativos (ver comentario en Footer.jsx): opacidad reducida y
+   sin cursor de puntero, para que no parezcan enlaces clicables. */
+.socials {
+  display: inline-flex;
+  align-items: center;
+  gap: 1rem;
+}
+
+.socialIcon {
+  width: 15px;
+  height: 15px;
+  opacity: 0.45;
+  cursor: default;
+}

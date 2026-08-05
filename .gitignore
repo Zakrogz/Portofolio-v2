@@ -1,0 +1,13 @@
+node_modules
+dist
+dist-ssr
+*.local
+
+# Editores/OS
+.vscode/*
+!.vscode/extensions.json
+.idea
+.DS_Store
+
+# Vídeo original de respaldo, no hace falta en el repo
+hero-loop-original-backup.mp4
