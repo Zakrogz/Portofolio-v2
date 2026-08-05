@@ -1,0 +1,170 @@
+:root {
+  /* Gris carbón neutro (sin tinte azulado) en vez de navy: más profesional,
+     y deja que el teal/rojo de acento destaquen sin competir con otro color. */
+  --navy-950: #131313;
+  --navy-900: #1d1d1d;
+  --navy-800: #272727;
+  --navy-700: #3d3d3d;
+  --teal: #2dd4bf;
+  --teal-dim: #1f8f82;
+  --red: #e8432e;
+  --text: #f4f5f3;
+  --text-muted: #9aa3af;
+
+  --font-display: "Bebas Neue", "Arial Narrow", sans-serif;
+  --font-body: "Inter", system-ui, sans-serif;
+  --font-mono: "Space Mono", ui-monospace, monospace;
+
+  color-scheme: dark;
+}
+
+* {
+  box-sizing: border-box;
+}
+
+html {
+  scroll-behavior: smooth;
+}
+
+body {
+  margin: 0;
+  background: var(--navy-950);
+  color: var(--text);
+  font-family: var(--font-body);
+  line-height: 1.5;
+  -webkit-font-smoothing: antialiased;
+}
+
+/* Grano de película muy sutil sobre toda la página: rompe las zonas planas
+   sin llamar la atención. Ruido generado en public/noise.svg. */
+body::after {
+  content: "";
+  position: fixed;
+  inset: 0;
+  z-index: 999;
+  pointer-events: none;
+  /* screen solo aclara (nunca oscurece): sobre un fondo casi negro,
+     "overlay" apenas se nota porque se comporta como multiply ahí. */
+  opacity: 0.1;
+  mix-blend-mode: screen;
+  background-image: url("/noise.svg");
+  background-repeat: repeat;
+  background-size: 180px 180px;
+}
+
+img,
+video {
+  max-width: 100%;
+  display: block;
+}
+
+a {
+  color: inherit;
+}
+
+h1,
+h2,
+h3 {
+  font-family: var(--font-display);
+  text-transform: uppercase;
+  /* Bebas Neue es muy condensada: un poco de tracking positivo evita que se
+     sienta apretada a tamaños grandes (lo contrario de lo que pedía Archivo Black). */
+  letter-spacing: 0.015em;
+  line-height: 1.02;
+  margin: 0;
+}
+
+p {
+  margin: 0;
+}
+
+button {
+  font-family: inherit;
+  cursor: pointer;
+}
+
+.container {
+  width: min(1180px, 100% - 3rem);
+  margin-inline: auto;
+}
+
+.section {
+  padding-block: clamp(4rem, 8vw, 7rem);
+}
+
+.eyebrow {
+  font-family: var(--font-mono);
+  text-transform: uppercase;
+  letter-spacing: 0.14em;
+  font-size: 0.8rem;
+  color: var(--teal);
+}
+
+.btn {
+  position: relative;
+  display: inline-flex;
+  align-items: center;
+  gap: 0.5rem;
+  padding: 0.9rem 1.7rem;
+  border-radius: 3px;
+  font-weight: 600;
+  font-size: 0.95rem;
+  text-decoration: none;
+  border: 1px solid transparent;
+  overflow: hidden;
+  isolation: isolate;
+  transition: transform 0.2s ease, border-color 0.2s ease;
+}
+
+/* Barrido de color de izquierda a derecha, detrás del texto (z-index -1). */
+.btn::before {
+  content: "";
+  position: absolute;
+  inset: 0;
+  z-index: -1;
+  transform: scaleX(0);
+  transform-origin: left;
+  transition: transform 0.35s cubic-bezier(0.65, 0, 0.35, 1);
+}
+
+.btn:hover::before {
+  transform: scaleX(1);
+}
+
+.btn-primary {
+  background: var(--red);
+  color: var(--text);
+}
+
+.btn-primary::before {
+  background: var(--teal-dim);
+}
+
+.btn-secondary {
+  border-color: var(--navy-700);
+  color: var(--text);
+}
+
+.btn-secondary::before {
+  background: var(--text);
+}
+
+.btn-secondary:hover {
+  color: var(--navy-950);
+  border-color: var(--text);
+}
+
+.btn:hover {
+  transform: translateY(-2px);
+}
+
+/* will-change se aplica solo a elementos que realmente animan (ver secciones) */
+.will-animate {
+  will-change: transform, opacity;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  html {
+    scroll-behavior: auto;
+  }
+}

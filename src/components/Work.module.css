@@ -1,0 +1,128 @@
+.section {
+  min-height: 100svh;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  padding-block: clamp(3rem, 6vw, 5rem);
+  overflow: hidden;
+}
+
+.header {
+  text-align: center;
+}
+
+.heading {
+  font-size: clamp(1.6rem, 4.4vw, 2.7rem);
+  margin-top: 0.6rem;
+  /* Pedido explícitamente: el titular cabe en una sola línea. */
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+/* --- Carrusel horizontal (centro grande + dos laterales) --- */
+.stage {
+  position: relative;
+  height: min(66vh, 620px);
+  margin-top: clamp(2.5rem, 6vw, 4rem);
+  overflow: hidden;
+}
+
+.card {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  width: min(260px, 60vw);
+  aspect-ratio: 9 / 16;
+  border-radius: 18px;
+  overflow: hidden;
+  background: var(--navy-900);
+  border: 1px solid var(--navy-700);
+  box-shadow: 0 30px 70px -20px rgba(0, 0, 0, 0.65);
+  will-change: transform, opacity;
+}
+
+.video {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+
+.mediaFallback {
+  position: absolute;
+  inset: 0;
+  background:
+    repeating-linear-gradient(
+      135deg,
+      rgba(255, 255, 255, 0.035) 0px,
+      rgba(255, 255, 255, 0.035) 1px,
+      transparent 1px,
+      transparent 9px
+    ),
+    linear-gradient(155deg, var(--navy-800), var(--tint, var(--navy-950)));
+}
+
+/* Variación sutil de tono entre tarjetas para que no se vean clonadas. */
+.card:nth-child(2) {
+  --tint: #17241f;
+}
+.card:nth-child(3) {
+  --tint: #1c1815;
+}
+.card:nth-child(4) {
+  --tint: #131d24;
+}
+.card:nth-child(5) {
+  --tint: #1d1620;
+}
+
+.timecode {
+  position: absolute;
+  top: 0.85rem;
+  left: 0.85rem;
+  font-family: var(--font-mono);
+  font-size: 0.68rem;
+  color: rgba(244, 245, 243, 0.55);
+  letter-spacing: 0.03em;
+}
+
+.playBadge {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  width: 46px;
+  height: 46px;
+  border-radius: 50%;
+  border: 1px solid rgba(244, 245, 243, 0.25);
+  background: rgba(19, 19, 19, 0.35);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  color: rgba(244, 245, 243, 0.7);
+}
+
+/* --- Badge de visitas --- */
+.views {
+  position: absolute;
+  left: 0.8rem;
+  bottom: 0.8rem;
+  z-index: 1;
+  display: inline-flex;
+  align-items: center;
+  gap: 0.35rem;
+  padding: 0.3rem 0.65rem;
+  border-radius: 999px;
+  background: rgba(19, 19, 19, 0.6);
+  backdrop-filter: blur(4px);
+  font-family: var(--font-mono);
+  font-size: 0.75rem;
+  color: var(--text);
+}
+
+.eyeIcon {
+  color: var(--teal);
+  flex-shrink: 0;
+}

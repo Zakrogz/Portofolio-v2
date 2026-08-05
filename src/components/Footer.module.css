@@ -1,0 +1,22 @@
+.footer {
+  border-top: 1px solid var(--navy-700);
+  padding-block: 1.75rem;
+}
+
+.inner {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.75rem 1.5rem;
+  justify-content: space-between;
+  font-size: 0.85rem;
+  color: var(--text-muted);
+}
+
+.inner a {
+  text-decoration: none;
+  color: var(--text-muted);
+}
+
+.inner a:hover {
+  color: var(--teal);
+}

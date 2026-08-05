@@ -1,0 +1,94 @@
+.hero {
+  position: relative;
+  min-height: 100svh;
+  display: flex;
+  align-items: center;
+  padding-top: 6rem;
+  overflow: hidden;
+  /* Contiene el mix-blend-mode del duotono a este bloque, para que no se
+     mezcle con nada del resto de la página por debajo. */
+  isolation: isolate;
+}
+
+.bgVideo {
+  position: absolute;
+  /* <video> es un elemento reemplazado: con inset y sin width/height propios
+     usaría su tamaño nativo en vez de estirarse. Por eso aquí el sangrado se
+     hace con width/height + calc(), no con inset negativo como en los divs. */
+  top: -2px;
+  left: -2px;
+  width: calc(100% + 4px);
+  height: calc(100% + 4px);
+  object-fit: cover;
+  /* El sujeto queda alto dentro del fotograma original: bajamos el punto de
+     recorte para mostrar menos "techo" y más parte central/baja del vídeo. */
+  object-position: center 75%;
+  z-index: -3;
+  background: var(--navy-950); /* color de espera mientras el vídeo carga o si falla */
+  /* Base en blanco y negro: el duotono de abajo aporta todo el color. */
+  filter: grayscale(1) contrast(1.15) brightness(0.85);
+}
+
+/* Duotono real: sustituye el tono del vídeo en escala de grises por este
+   degradado navy → teal, conservando la luminancia original (como un grading). */
+.bgDuotone {
+  position: absolute;
+  /* Un poco de sangrado más allá del borde: evita una línea de 1px cuando
+     100svh redondea a un valor no entero. .hero recorta el sobrante. */
+  inset: -2px;
+  z-index: -2;
+  background: linear-gradient(135deg, var(--navy-950) 0%, var(--teal-dim) 100%);
+  mix-blend-mode: color;
+}
+
+/* Capa translúcida encima de todo para que el texto siga siendo legible */
+.bgOverlay {
+  position: absolute;
+  /* Un poco de sangrado más allá del borde: evita una línea de 1px cuando
+     100svh redondea a un valor no entero. .hero recorta el sobrante. */
+  inset: -2px;
+  z-index: -1;
+  background:
+    /* Funde a navy-950 sólido justo antes del borde inferior, para que el
+       vídeo no se corte en seco contra el fondo plano de la siguiente sección. */
+    linear-gradient(to bottom, transparent 82%, var(--navy-950) 100%),
+    linear-gradient(100deg, rgba(19, 19, 19, 0.85) 0%, rgba(19, 19, 19, 0.45) 45%, rgba(19, 19, 19, 0.8) 100%);
+}
+
+.grid {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: space-between;
+  align-items: center;
+  gap: 3rem;
+}
+
+/* Ancho máximo para que el texto quede anclado a la izquierda y deje ver
+   el vídeo central en vez de ocupar la mitad del ancho como antes. */
+.copy {
+  max-width: 30rem;
+}
+
+.title {
+  font-size: clamp(3rem, 7.5vw, 5.6rem);
+  overflow: hidden;
+}
+
+.wordMask {
+  display: inline-block;
+  overflow: hidden;
+  vertical-align: top;
+  margin-right: 0.26em;
+}
+
+.word {
+  display: inline-block;
+}
+
+.subtitle {
+  margin-top: 1.5rem;
+  max-width: 46ch;
+  color: var(--text-muted);
+  font-size: 1.05rem;
+}
+
