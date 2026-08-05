@@ -50,6 +50,7 @@ export default function Work() {
   const scope = useRef(null);
   const eyebrowRef = useRef(null);
   const titleRef = useRef(null);
+  const stageRef = useRef(null);
   const cardRefs = useRef([]);
   cardRefs.current = [];
 
@@ -101,12 +102,20 @@ export default function Work() {
         "-=0.1"
       );
 
-      tl.to(cards, {
-        autoAlpha: (i) => slotVars(0 - i).autoAlpha,
-        duration: 0.35,
-        stagger: { each: 0.05, from: "center" },
-        ease: EASE,
-      });
+      // Solapado con el título ("-=0.2"): antes esperaba a que el título
+      // terminara del todo, dejando un tramo de scroll en blanco (el pin ya
+      // había enganchado pero no había nada que ver) antes de que aparecieran
+      // las tarjetas.
+      tl.to(
+        cards,
+        {
+          autoAlpha: (i) => slotVars(0 - i).autoAlpha,
+          duration: 0.35,
+          stagger: { each: 0.05, from: "center" },
+          ease: EASE,
+        },
+        "-=0.2"
+      );
 
       // En cada paso, el "centro" avanza una tarjeta: todas se reubican en
       // su nuevo slot a la vez (el índice que gana el centro se mueve desde
@@ -117,6 +126,16 @@ export default function Work() {
           tl.to(card, { ...slotVars(cur - idx), duration: 0.9, ease: EASE }, `card${cur}`);
         });
       }
+
+      // "Outro": tras ver la última tarjeta, la sección entera se retira un
+      // poco antes de soltar el pin — evita el corte seco al pasar a Proceso.
+      tl.addLabel("outro", "+=0.15")
+        .to(
+          [eyebrowRef.current, titleRef.current],
+          { autoAlpha: 0.15, y: -16, duration: 0.4, ease: EASE },
+          "outro"
+        )
+        .to(stageRef.current, { autoAlpha: 0.2, duration: 0.4, ease: EASE }, "outro");
     },
     { scope }
   );
@@ -132,7 +151,7 @@ export default function Work() {
         </h2>
       </div>
 
-      <div className={styles.stage}>
+      <div className={styles.stage} ref={stageRef}>
         {work.map((project) => (
           <div className={styles.card} key={project.title} ref={registerCard}>
             {/* Coloca el vídeo del proyecto en public/work/ (formato vertical 9:16). */}

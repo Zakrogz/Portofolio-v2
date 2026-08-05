@@ -93,6 +93,14 @@ export default function Services() {
             `step${i}`
           );
       }
+
+      // "Outro": tras el último servicio, todo el bloque se retira un poco
+      // antes de soltar el pin — evita el corte seco al pasar a Testimonios.
+      tl.addLabel("outro", "+=0.15").to(
+        [eyebrowRef.current, headingRef.current, panelRef.current],
+        { autoAlpha: 0.15, y: -20, duration: 0.4, ease: EASE },
+        "outro"
+      );
     },
     { scope }
   );

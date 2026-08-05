@@ -1,4 +1,5 @@
 import Nav from "./components/Nav.jsx";
+import Timeline from "./components/Timeline.jsx";
 import Hero from "./components/Hero.jsx";
 import Work from "./components/Work.jsx";
 import Process from "./components/Process.jsx";
@@ -11,6 +12,7 @@ export default function App() {
   return (
     <>
       <Nav />
+      <Timeline />
       <main>
         <Hero />
         <Work />

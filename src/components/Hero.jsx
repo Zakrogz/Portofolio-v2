@@ -112,6 +112,24 @@ export default function Hero() {
                   }
                 },
               });
+
+              // "Outro": el texto se mantiene como está durante los primeros
+              // dos tercios del pin y se retira en el último tercio — así la
+              // sección no suelta de golpe (corte seco), sino que ya se está
+              // despidiendo justo cuando Trabajo empieza a asomar por abajo.
+              // Comparte el mismo trigger/rango que el scrub del vídeo, pero
+              // sin pin (ese ya lo pone el tween de arriba).
+              gsap
+                .timeline({
+                  scrollTrigger: {
+                    trigger: scope.current,
+                    start: "top top",
+                    end: "+=80%",
+                    scrub: 0.5,
+                  },
+                })
+                .to({}, { duration: 0.7 })
+                .to(`.${styles.copy}`, { autoAlpha: 0.15, y: -24, duration: 0.3, ease: EASE });
             }
           }
 

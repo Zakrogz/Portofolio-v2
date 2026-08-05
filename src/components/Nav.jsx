@@ -17,20 +17,34 @@ export default function Nav() {
         ease: EASE,
       });
 
-      // Un ScrollTrigger por sección enlazada: mientras esté cruzando el
-      // centro de la pantalla, marca su link como activo en el nav.
-      nav.forEach((item) => {
-        const target = document.querySelector(item.href);
-        if (!target) return;
+      const links = nav
+        .map((item) => ({ href: item.href, el: document.querySelector(item.href) }))
+        .filter((l) => l.el);
 
-        ScrollTrigger.create({
-          trigger: target,
-          start: "top center",
-          end: "bottom center",
-          onToggle: (self) => {
-            if (self.isActive) setActive(item.href);
-          },
-        });
+      if (!links.length) return;
+
+      // Cuál link está activo: la última sección (en orden de página) cuyo
+      // borde superior ya ha cruzado el centro de la pantalla, medido EN VIVO
+      // en cada scroll (getBoundingClientRect, no coordenadas cacheadas). Con
+      // Hero/Trabajo/Servicios fijados (pin) de por medio, un ScrollTrigger
+      // por sección con start/end fijo calcula esas coordenadas en el
+      // momento de crearse — como el Nav se monta antes que esas secciones
+      // creen su pin, quedan obsoletas en cuanto el pin añade su hueco extra
+      // de scroll. Medir en vivo lo evita sin depender del orden de montaje.
+      ScrollTrigger.create({
+        trigger: document.documentElement,
+        start: "top top",
+        end: "bottom bottom",
+        onUpdate: () => {
+          const centerY = window.innerHeight / 2;
+          let current = null;
+          for (const link of links) {
+            if (link.el.getBoundingClientRect().top <= centerY) {
+              current = link.href;
+            }
+          }
+          setActive((prev) => (prev === current ? prev : current));
+        },
       });
     },
     { scope }

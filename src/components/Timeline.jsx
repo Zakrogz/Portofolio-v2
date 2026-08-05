@@ -62,8 +62,8 @@ export default function Timeline() {
         });
       });
 
-      // Hero y Trabajo van fijados (pin) con scroll extendido, así que
-      // consumen mucho más recorrido real que las demás secciones. Si
+      // Hero, Trabajo y Servicios van fijados (pin) con scroll extendido, así
+      // que consumen mucho más recorrido real que las demás secciones. Si
       // repartimos las marcas a partes iguales por índice, el trazado no
       // refleja eso. En su lugar, colocamos cada marca según la fracción
       // real de scroll en la que empieza su sección (trigger.start /
@@ -74,7 +74,9 @@ export default function Timeline() {
       // esperamos al evento global "refresh" en vez de intentarlo aquí
       // mismo (mismo motivo por el que el pin del vídeo del Hero se creaba
       // mal en su momento: medir antes de tiempo da coordenadas obsoletas).
-      const applyProportionalWaypoints = () => {
+      let dotTween = null;
+
+      const rebuildTrack = () => {
         const max = ScrollTrigger.maxScroll(window);
         if (!max) return;
 
@@ -88,31 +90,38 @@ export default function Timeline() {
           circle.setAttribute("cx", points[i].x);
           circle.setAttribute("cy", points[i].y);
         });
+
+        // El tween de motionPath cachea la forma del <path> en el momento en
+        // que se crea: si el trazado cambia después (justo lo que hacemos
+        // arriba), hay que matar y recrear el tween para que lea la forma
+        // actualizada. Si no, el punto sigue el trazado viejo mientras la
+        // línea dibujada ya es otra — se ve completamente descuadrado.
+        dotTween?.scrollTrigger?.kill();
+        dotTween?.kill();
+        dotTween = gsap.to(dotRef.current, {
+          motionPath: {
+            path: pathRef.current,
+            align: pathRef.current,
+            alignOrigin: [0.5, 0.5],
+          },
+          ease: "none",
+          scrollTrigger: {
+            trigger: document.documentElement,
+            start: "top top",
+            end: "bottom bottom",
+            scrub: 0.3,
+          },
+        });
       };
 
-      ScrollTrigger.addEventListener("refresh", applyProportionalWaypoints);
-      applyProportionalWaypoints(); // por si ya hay datos válidos (recarga en caliente, etc.)
+      ScrollTrigger.addEventListener("refresh", rebuildTrack);
+      rebuildTrack(); // por si ya hay datos válidos (recarga en caliente, etc.)
 
-      // El punto recorre el trazado entero según el progreso de scroll de
-      // TODA la página (no de una sección) — ScrollTrigger ya mide el alto
-      // real del documento por sí solo, incluidos los huecos de los pines.
-      gsap.to(dotRef.current, {
-        motionPath: {
-          path: pathRef.current,
-          align: pathRef.current,
-          alignOrigin: [0.5, 0.5],
-        },
-        ease: "none",
-        scrollTrigger: {
-          trigger: document.documentElement,
-          start: "top top",
-          end: "bottom bottom",
-          scrub: 0.3,
-        },
-      });
-
-      return () =>
-        ScrollTrigger.removeEventListener("refresh", applyProportionalWaypoints);
+      return () => {
+        ScrollTrigger.removeEventListener("refresh", rebuildTrack);
+        dotTween?.scrollTrigger?.kill();
+        dotTween?.kill();
+      };
     },
     { scope: railRef }
   );
